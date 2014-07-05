@@ -24,4 +24,10 @@ public class Operator {
         OutputStream stream = socket.getOutputStream();
         stream.write(data);
     }
+
+    public byte[] receive() throws IOException {
+        byte[] size = new byte[22];
+        socket.getInputStream().read(size);
+        return size;
+    }
 }
