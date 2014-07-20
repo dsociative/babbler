@@ -1,11 +1,14 @@
-import java.io.IOException;
-import java.io.OutputStream;
+import org.json.JSONException;
+
+import java.io.*;
 import java.net.Socket;
 
 public class Operator {
     private Socket socket;
     private final String host;
     private final int port;
+
+    private MessageReader reader;
 
     public Operator(String host, int port) throws IOException {
         this.host = host;
@@ -14,6 +17,7 @@ public class Operator {
 
     public void connect() throws IOException {
         socket = new Socket(host, port);
+        reader = new MessageReader(socket.getInputStream());
     }
 
     public boolean is_connected() {
@@ -25,9 +29,7 @@ public class Operator {
         stream.write(data);
     }
 
-    public byte[] receive() throws IOException {
-        byte[] size = new byte[22];
-        socket.getInputStream().read(size);
-        return size;
+    public org.json.JSONObject receive() throws IOException, JSONException {
+        return reader.message();
     }
 }

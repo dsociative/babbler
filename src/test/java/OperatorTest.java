@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +14,10 @@ public class OperatorTest {
         0x22, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x2e, 0x74,
         0x61, 0x6c, 0x6b, 0x65, 0x72, 0x22, 0x7d
     };
-    private static final byte[] HELLO_BABBLER = new byte[]{
-            0x00, 0x00, 0x00, 0x12, 0x7b, 0x22, 0x68, 0x65,
-            0x6c, 0x6c, 0x6f, 0x22, 0x3a, 0x20, 0x22, 0x77,
-            0x6f, 0x72, 0x6c, 0x64, 0x22, 0x7d };
 
     @Before
     public void setUp() throws IOException {
-        operator = new Operator("localhost", 8885);
+        operator = new Operator("geektech.ru", 8885);
         operator.connect();
     }
 
@@ -35,9 +32,8 @@ public class OperatorTest {
     }
 
     @Test
-    public void receive() throws IOException, InterruptedException {
+    public void receive() throws IOException, InterruptedException, JSONException {
         operator.send(HELLO_TALKER);
-        byte[] receive = operator.receive();
-        assertEquals(receive, HELLO_BABBLER);
+        assertEquals("{\"hello\":\"world\"}", operator.receive().toString());
     }
 }
