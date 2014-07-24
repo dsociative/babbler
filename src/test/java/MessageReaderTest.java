@@ -16,11 +16,11 @@ public class MessageReaderTest extends TestCase {
     }
 
     public void test_size() throws IOException {
-        assertEquals(18, reader.read_size());
+        assertEquals(18, reader.readSize());
     }
 
     public void test_sting_message() throws IOException {
-        assertEquals("{\"hello\": \"world\"}", reader.string_message());
+        assertEquals("{\"hello\": \"world\"}", reader.stringMessage());
     }
 
     public void test_message() throws IOException, JSONException {

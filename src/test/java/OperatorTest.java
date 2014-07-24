@@ -1,4 +1,5 @@
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,26 +15,30 @@ public class OperatorTest {
         0x22, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x2e, 0x74,
         0x61, 0x6c, 0x6b, 0x65, 0x72, 0x22, 0x7d
     };
+    private JSONObject message;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, JSONException {
         operator = new Operator("geektech.ru", 8885);
         operator.connect();
+
+        message = new JSONObject();
+        message.put("command", "whatever");
     }
 
     @Test
     public void connect() throws IOException {
-        assertEquals(operator.is_connected(), true);
+        assertEquals(operator.isСonnected(), true);
     }
 
     @Test
     public void send() throws IOException {
-        operator.send(HELLO_TALKER);
+        operator.send(message);
     }
 
     @Test
     public void receive() throws IOException, InterruptedException, JSONException {
-        operator.send(HELLO_TALKER);
+        operator.send(message);
         assertEquals("{\"hello\":\"world\"}", operator.receive().toString());
     }
 }

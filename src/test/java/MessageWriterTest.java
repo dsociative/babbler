@@ -2,6 +2,9 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -13,17 +16,38 @@ public class MessageWriterTest extends TestCase {
         107, 101, 114, 34, 125
     };
     private MessageWriter writer;
+    private JSONObject message;
+    private MockBuffer buffer;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        writer = new MessageWriter();
+        buffer = new MockBuffer();
+        writer = new MessageWriter(buffer);
+
+        message = new JSONObject();
+        message.put("command", "hello.talker");
     }
 
     public void test_pack() throws JSONException {
-        JSONObject message = new JSONObject();
-        message.put("command", "hello.talker");
         assertEquals(Arrays.toString(HELLO_TALKER), Arrays.toString(writer.pack(message)));
     }
 
+    public void testWrite() throws IOException {
+        writer.write(message);
+        assertEquals(Arrays.toString(HELLO_TALKER), Arrays.toString(buffer.data.array()));
+    }
+
+    private class MockBuffer extends OutputStream {
+        private ByteBuffer data;
+
+        public MockBuffer(){
+            data = ByteBuffer.allocate(30);
+        }
+
+        @Override
+        public void write(int i) throws IOException {
+            data.put((byte) i);
+        }
+    }
 }
