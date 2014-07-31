@@ -23,7 +23,7 @@ public class Operator {
         writer = new MessageWriter(socket.getOutputStream());
     }
 
-    public boolean isСonnected() {
+    public boolean isConnected() {
         return socket.isConnected();
     }
 

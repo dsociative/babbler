@@ -10,10 +10,11 @@ import static org.junit.Assert.assertEquals;
 public class OperatorTest {
     public Operator operator;
     private JSONObject message;
+    private String host = System.getenv("HOST");
 
     @Before
     public void setUp() throws IOException, JSONException {
-        operator = new Operator("geektech.ru", 8885);
+        operator = new Operator(host, 8885);
         operator.connect();
 
         message = new JSONObject();
@@ -22,7 +23,7 @@ public class OperatorTest {
 
     @Test
     public void connect() throws IOException {
-        assertEquals(operator.isСonnected(), true);
+        assertEquals(operator.isConnected(), true);
     }
 
     @Test
