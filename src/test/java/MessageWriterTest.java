@@ -29,7 +29,7 @@ public class MessageWriterTest extends TestCase {
         message.put("command", "hello.talker");
     }
 
-    public void test_pack() throws JSONException {
+    public void testPack() throws JSONException {
         assertEquals(Arrays.toString(HELLO_TALKER), Arrays.toString(writer.pack(message)));
     }
 

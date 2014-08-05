@@ -15,15 +15,15 @@ public class MessageReaderTest extends TestCase {
         reader = new MessageReader(new MockStream());
     }
 
-    public void test_size() throws IOException {
+    public void testSize() throws IOException {
         assertEquals(18, reader.readSize());
     }
 
-    public void test_sting_message() throws IOException {
+    public void testStingMessage() throws IOException {
         assertEquals("{\"hello\": \"world\"}", reader.stringMessage());
     }
 
-    public void test_message() throws IOException, JSONException {
+    public void testMessage() throws IOException, JSONException {
         JSONObject message = new JSONObject();
         message.put("hello", "world");
         assertEquals(message.toString(), reader.message().toString());
